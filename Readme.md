@@ -1,87 +1,99 @@
 # 🩺 Mediora AI
 
-> **Your AI-Powered Medical Knowledge Assistant**
+> **AI-Powered Medical Knowledge Assistant using Retrieval-Augmented Generation (RAG)**
 
-Mediora AI is a Retrieval-Augmented Generation (RAG) chatbot that enables users to ask medical questions in natural language and receive accurate, context-aware answers based on a curated collection of medical PDF documents. Inspired by NotebookLM, Mediora AI searches across multiple medical references and generates responses using Google's Gemini AI.
+Mediora AI is an intelligent medical chatbot that answers health-related questions using **Retrieval-Augmented Generation (RAG)**. It searches a curated medical knowledge base built from PDF documents and generates context-aware responses using **Google Gemini AI**.
 
----
-
-## ✨ Features
-
-* 📚 Supports multiple medical PDF documents
-* 🤖 AI-powered question answering using Google Gemini
-* 🔍 Semantic search with vector embeddings
-* 🧠 Retrieval-Augmented Generation (RAG)
-* 📄 Source-aware responses from uploaded PDFs
-* ⚡ Fast retrieval using Chroma Vector Database
-* 💬 Interactive chatbot interface
-* ➕ Easily expand the knowledge base by adding new PDFs
+> **⚠️ Disclaimer:** Mediora AI is intended for educational purposes only and should not be used as a substitute for professional medical advice.
 
 ---
 
-## 🛠️ Tech Stack
+# ✨ Features
 
-| Technology             | Purpose               |
-| ---------------------- | --------------------- |
-| Python                 | Backend               |
-| LangChain              | RAG Pipeline          |
-| Google Gemini          | Large Language Model  |
-| ChromaDB               | Vector Database       |
-| HuggingFace Embeddings | Document Embeddings   |
-| PyPDF                  | PDF Processing        |
-| python-dotenv          | Environment Variables |
+- 🩺 AI-powered medical question answering
+- 📚 Knowledge base built from medical PDF documents
+- 🔍 Semantic search using Sentence Transformers
+- 🤖 Google Gemini for natural language responses
+- ⚡ Fast retrieval with precomputed vector embeddings
+- 💬 Clean and interactive Streamlit chatbot interface
+- 📝 Conversation history
+- 🗑️ Clear Chat functionality
+- 💡 Clickable example questions
+- 🚫 Similarity threshold to reduce incorrect answers
+- ⚠️ Graceful handling of API quota and server errors
 
 ---
 
-## 📂 Project Structure
+# 🛠️ Tech Stack
+
+| Technology            | Purpose               |
+| --------------------- | --------------------- |
+| Python                | Backend               |
+| Streamlit             | Web Application       |
+| Google Gemini API     | Large Language Model  |
+| Sentence Transformers | Text Embeddings       |
+| Joblib                | Vector Storage        |
+| scikit-learn          | Similarity Search     |
+| python-dotenv         | Environment Variables |
+
+---
+
+# 📂 Project Structure
 
 ```text
-Mediora-AI/
+Mediora-ai/
 │
-├── medical_pdfs/          # Medical PDF documents
+├── docs/                     # Medical PDF documents
 │
-├── vector_store/          # Chroma vector database
+├── app.py                    # Streamlit application
+├── build_database.py         # Build vector database
+├── embedding.py              # Generate embeddings
+├── vector_store.py           # Semantic search
+├── prompts.py                # Prompt template
+├── rag.py                    # RAG pipeline
 │
-├── ingest.py              # Builds the vector database
-├── chatbot.py             # Chatbot application
-├── config.py              # Project configuration
-├── utils.py               # Helper functions
-│
+├── vector_store.pkl          # Saved vector database
 ├── requirements.txt
+├── .gitignore
 ├── .env
-├── README.md
-│
-└── LICENSE
+└── README.md
 ```
 
 ---
 
-## ⚙️ Installation
+# ⚙️ Installation
 
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/your-username/mediora-ai.git
-cd mediora-ai
-```
-
-### 2. Create a virtual environment
-
-**Windows**
+## 1. Clone the Repository
 
 ```bash
-python -m venv myenv
-myenv\Scripts\activate
+git clone https://github.com/YOUR_USERNAME/Mediora-ai.git
+
+cd Mediora-ai
 ```
 
-**Linux / macOS**
+---
+
+## 2. Create a Virtual Environment
+
+### Windows
 
 ```bash
-python3 -m venv myenv
-source myenv/bin/activate
+python -m venv env
+
+env\Scripts\activate
 ```
 
-### 3. Install dependencies
+### Linux/macOS
+
+```bash
+python3 -m venv env
+
+source env/bin/activate
+```
+
+---
+
+## 3. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
@@ -89,127 +101,139 @@ pip install -r requirements.txt
 
 ---
 
-## 🔑 Configure API Key
+# 🔑 Configure API Key
 
 Create a `.env` file in the project root.
 
 ```env
-GOOGLE_API_KEY=YOUR_GEMINI_API_KEY
+GEMINI_API_KEY=YOUR_API_KEY
+GEMINI_GEN_MODEL=gemini-2.5-flash
 ```
 
 ---
 
-## 📚 Add Medical Documents
+# 📚 Add Medical Documents
 
-Place all your medical PDF files inside:
-
-```text
-medical_pdfs/
-```
+Place your medical PDF files inside the `docs` folder.
 
 Example:
 
 ```text
-medical_pdfs/
-├── Anatomy.pdf
-├── Physiology.pdf
-├── Pharmacology.pdf
-├── Pathology.pdf
-├── Microbiology.pdf
-├── Surgery.pdf
-└── Medicine.pdf
+docs/
+├── Diabetes.pdf
+├── Dengue.pdf
+├── Asthma.pdf
+├── Hypertension.pdf
+├── First_aid.pdf
+└── Nutrition and Health.pdf
 ```
 
 ---
 
-## 🧠 Build the Knowledge Base
+# 🧠 Build the Knowledge Base
 
-Run:
+Run the following command:
 
 ```bash
-python ingest.py
+python build_database.py
 ```
 
 This will:
 
-* Read all PDFs
-* Split documents into chunks
-* Generate embeddings
-* Store vectors in ChromaDB
+- Read all PDF documents
+- Split documents into chunks
+- Generate embeddings
+- Save the vector database as `vector_store.pkl`
 
 ---
 
-## 💬 Start the Chatbot
+# 🚀 Run the Application
 
-Run:
+Start the Streamlit application:
 
 ```bash
-python chatbot.py
+streamlit run app.py
 ```
+
+---
+
+# 💬 Example Questions
+
+Try asking questions like:
+
+- What is dengue?
+- What are the symptoms of diabetes?
+- How can hypertension be prevented?
+- What should I do for burns?
+- What causes asthma?
+- What foods are good for heart health?
+
+---
+
+# 🔄 How It Works
+
+1. User asks a medical question.
+2. The question is converted into an embedding.
+3. The system searches the medical knowledge base for the most relevant information.
+4. Relevant context is sent to Google Gemini.
+5. Gemini generates a context-aware answer.
+6. The response is displayed in the Streamlit chatbot.
+
+---
+
+# 📸 Screenshots
+
+You can add screenshots here after uploading them.
 
 Example:
 
 ```text
-Ask your question:
-
-> What are the symptoms of dengue fever?
-```
-
-Example response:
-
-```text
-Dengue fever commonly presents with:
-
-• High fever
-• Severe headache
-• Pain behind the eyes
-• Muscle and joint pain
-• Skin rash
-• Mild bleeding
-
-Source:
-Medicine.pdf (Page 124)
+screenshots/
+├── home.png
+├── chatbot.png
 ```
 
 ---
 
-## 📌 Future Enhancements
+# 🚀 Future Improvements
 
-* 🌐 Streamlit web interface
-* 📱 Responsive UI
-* 🎤 Voice input and output
-* 🖼️ Medical image understanding
-* 📝 Conversation history
-* ⭐ Bookmark important responses
-* 📊 Analytics dashboard
-* 👨‍⚕️ Doctor mode
-* 🌍 Multi-language support
-* 🔒 User authentication
-* ☁️ Cloud deployment
+- 🎤 Voice input
+- 🔊 Voice responses
+- 🌍 Multi-language support
+- 📱 Mobile-friendly interface
+- 🔖 Save conversation history
+- 👨‍⚕️ Doctor mode
+- 📊 Medical analytics dashboard
+- ☁️ Cloud deployment
+- 🖼️ Medical image understanding
 
 ---
 
-## 🎯 Use Cases
+# 🎯 Use Cases
 
-* Medical students
-* Healthcare professionals
-* Researchers
-* Academic institutions
-* Medical libraries
-* Knowledge management
-* Clinical reference
-
----
-
-## ⚠️ Disclaimer
-
-Mediora AI is designed for educational and informational purposes only. It is **not** a substitute for professional medical advice, diagnosis, or treatment. Always consult a qualified healthcare professional before making medical decisions.
+- Medical students
+- Healthcare professionals
+- Researchers
+- Academic institutions
+- Medical libraries
+- Educational learning
 
 ---
 
-## 👩‍💻 Author
+# ⚠️ Disclaimer
 
-**Sneha Singha**
+Mediora AI is designed for educational and informational purposes only.
+
+It should **not** be used as a replacement for professional medical advice, diagnosis, or treatment.
+
+Always consult a qualified healthcare professional for medical concerns.
+
+---
+
+# 👩‍💻 Author
+
+**Sneha Jana**
+**Sneha singha**
 
 B.Tech – Computer Science & Engineering
 
@@ -217,10 +241,6 @@ Guru Nanak Institute of Technology (GNIT)
 
 ---
 
-## 📜 License
+# ⭐ Support
 
-This project is licensed under the MIT License.
-
----
-
-# ⭐ If you find this project useful, consider giving it a star on GitHub!
+If you found this project useful, please consider **starring ⭐ the repository** on GitHub.
